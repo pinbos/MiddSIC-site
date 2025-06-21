@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manage Team - Middlebury SIC{% endblock %}
+
+{% block content %}
+<section class="admin-team">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Manage Team</h1>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline">Back to Dashboard</a>
+        </div>
+        
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'tab-exec')">Executive Committee</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-pm')">Portfolio Managers</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-analysts')">Senior Analysts</button>
+        </div>
+        
+        <!-- Executive Committee Tab -->
+        <div id="tab-exec" class="tab-content active">
+            <h2>Executive Committee</h2>
+            
+            <form action="{% url 'add_team_member' %}" method="post" enctype="multipart/form-data" class="add-form">
+                {% csrf_token %}
+                <input type="hidden" name="position_type" value="EXEC">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exec_role">Role</label>
+                        <select name="exec_role" id="exec_role" required>
+                            <option value="CIO">Chief Investment Officer</option>
+                            <option value="CHAIR">Co-Chair</option>
+                            <option value="CAO">Chief Administrative Officer</option>
+                            <option value="COO">Chief Operating Officer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exec_name">Name</label>
+                        <input type="text" name="name" id="exec_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exec_photo">Profile Photo</label>
+                        <input type="file" name="profile_picture" id="exec_photo" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Add Executive</button>
+                </div>
+            </form>
+            
+            <div class="team-list">
+                {% for member in executives %}
+                <div class="team-item">
+                    {% if member.profile_picture %}
+                    <img src="{{ member.profile_picture.url }}" alt="{{ member.name }}">
+                    {% else %}
+                    <div class="placeholder-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                    <div class="team-info">
+                        <h3>{{ member.get_exec_role_display }}</h3>
+                        <p>{{ member.name }}</p>
+                    </div>
+                    <a href="{% url 'delete_team_member' member.id %}" class="btn btn-danger" 
+                       onclick="return confirm('Are you sure you want to remove this member?');">Remove</a>
+                </div>
+                {% empty %}
+                <p>No executive committee members added yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Portfolio Managers Tab -->
+        <div id="tab-pm" class="tab-content">
+            <h2>Portfolio Managers</h2>
+            
+            <form action="{% url 'add_team_member' %}" method="post" enctype="multipart/form-data" class="add-form">
+                {% csrf_token %}
+                <input type="hidden" name="position_type" value="PM">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pm_industry">Industry Group</label>
+                        <select name="industry_group" id="pm_industry" required>
+                            <option value="TMT">Tech, Media & Telecom</option>
+                            <option value="RELG">Real Estate, Gaming & Lodging</option>
+                            <option value="FI">Financial Institutions</option>
+                            <option value="HLS">Healthcare & Life Sciences</option>
+                            <option value="CR">Consumer & Retail</option>
+                            <option value="NR">Natural Resources</option>
+                            <option value="IND">Industrials</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pm_name">Name</label>
+                        <input type="text" name="name" id="pm_name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pm_photo">Profile Photo</label>
+                        <input type="file" name="profile_picture" id="pm_photo" accept="image/*">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Add Portfolio Manager</button>
+                </div>
+            </form>
+            
+            <div class="team-list">
+                {% for member in portfolio_managers %}
+                <div class="team-item">
+                    {% if member.profile_picture %}
+                    <img src="{{ member.profile_picture.url }}" alt="{{ member.name }}">
+                    {% else %}
+                    <div class="placeholder-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                    <div class="team-info">
+                        <h3>{{ member.get_industry_group_display }}</h3>
+                        <p>{{ member.name }}</p>
+                    </div>
+                    <a href="{% url 'delete_team_member' member.id %}" class="btn btn-danger" 
+                       onclick="return confirm('Are you sure you want to remove this member?');">Remove</a>
+                </div>
+                {% empty %}
+                <p>No portfolio managers added yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Senior Analysts Tab -->
+        <div id="tab-analysts" class="tab-content">
+            <h2>Senior Analysts</h2>
+            
+            <form action="{% url 'add_team_member' %}" method="post" class="add-form">
+                {% csrf_token %}
+                <input type="hidden" name="position_type" value="SA">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="analyst_industry">Industry Group</label>
+                        <select name="industry_group" id="analyst_industry" required>
+                            <option value="TMT">Tech, Media & Telecom</option>
+                            <option value="RELG">Real Estate, Gaming & Lodging</option>
+                            <option value="FI">Financial Institutions</option>
+                            <option value="HLS">Healthcare & Life Sciences</option>
+                            <option value="CR">Consumer & Retail</option>
+                            <option value="NR">Natural Resources</option>
+                            <option value="IND">Industrials</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="analyst_name">Name</label>
+                        <input type="text" name="name" id="analyst_name" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Add Senior Analyst</button>
+                </div>
+            </form>
+            
+            <div class="team-list">
+                {% for member in senior_analysts %}
+                <div class="team-item analyst-item">
+                    <div class="team-info">
+                        <h3>{{ member.get_industry_group_display }}</h3>
+                        <p>{{ member.name }}</p>
+                    </div>
+                    <a href="{% url 'delete_team_member' member.id %}" class="btn btn-danger" 
+                       onclick="return confirm('Are you sure you want to remove this analyst?');">Remove</a>
+                </div>
+                {% empty %}
+                <p>No senior analysts added yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function openTab(evt, tabId) {
+    var i, tabContent, tabBtn;
+    
+    // Hide all tab content
+    tabContent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].classList.remove("active");
+    }
+    
+    // Remove "active" class from all tab buttons
+    tabBtn = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tabBtn.length; i++) {
+        tabBtn[i].classList.remove("active");
+    }
+    
+    // Show the current tab, and add "active" class to the button that opened the tab
+    document.getElementById(tabId).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+</script>
+{% endblock %}

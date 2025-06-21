@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Our Portfolio - Middlebury SIC{% endblock %}
+{% block meta_description %}View the current holdings and performance of the Middlebury Student Investment Committee's portfolio.{% endblock %}
+
+{% block content %}
+<section class="portfolio-header">
+    <div class="container">
+        <h1>Our Investment Portfolio</h1>
+        <p>The Middlebury Student Investment Committee manages a portion of the college's endowment. Here's our current portfolio and performance.</p>
+    </div>
+</section>
+
+<section class="portfolio-summary">
+    <div class="container">
+        <div class="summary-cards">
+            <div class="summary-card">
+                <h3>Total Portfolio Value</h3>
+                <p class="value">${{ total_value|floatformat:2 }}</p>
+            </div>
+            
+            <div class="summary-card">
+                <h3>Total Cost Basis</h3>
+                <p class="value">${{ total_cost|floatformat:2 }}</p>
+            </div>
+            
+            <div class="summary-card {% if overall_gain_loss >= 0 %}positive{% else %}negative{% endif %}">
+                <h3>Overall Gain/Loss</h3>
+                <p class="value">${{ overall_gain_loss|floatformat:2 }} ({{ overall_gain_loss_pct|floatformat:2 }}%)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="portfolio-holdings">
+    <div class="container">
+        <h2>Current Holdings</h2>
+        
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Ticker</th>
+                        <th>Company</th>
+                        <th>Shares</th>
+                        <th>Cost Basis</th>
+                        <th>Current Price</th>
+                        <th>Value</th>
+                        <th>Gain/Loss</th>
+                        <th>Gain/Loss %</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stock in portfolio_data %}
+                    <tr>
+                        <td>{{ stock.ticker }}</td>
+                        <td>{{ stock.company_name }}</td>
+                        <td>{{ stock.shares }}</td>
+                        <td>${{ stock.cost_basis|floatformat:2 }}</td>
+                        <td>${{ stock.current_price|floatformat:2 }}</td>
+                        <td>${{ stock.position_value|floatformat:2 }}</td>
+                        <td class="{% if stock.gain_loss >= 0 %}positive{% else %}negative{% endif %}">
+                            ${{ stock.gain_loss|floatformat:2 }}
+                        </td>
+                        <td class="{% if stock.gain_loss_pct >= 0 %}positive{% else %}negative{% endif %}">
+                            {{ stock.gain_loss_pct|floatformat:2 }}%
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center">No holdings in the portfolio yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

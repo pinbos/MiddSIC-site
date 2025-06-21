@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manage Portfolio - Middlebury SIC{% endblock %}
+
+{% block content %}
+<section class="admin-portfolio">
+    <div class="container">
+        <div class="admin-header">
+            <h1>Manage Portfolio</h1>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-outline">Back to Dashboard</a>
+        </div>
+
+        {% if error %}
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if success_message %}
+        <div class="alert alert-success">
+            {{ success_message }}
+        </div>
+        {% endif %}
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'tab-transactions')">Add Transaction</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-history')">Transaction History</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-holdings')">Current Holdings</button>
+        </div>
+
+        <div id="tab-transactions" class="tab-content active">
+            <h2>Add New Transaction</h2>
+
+            <form action="{% url 'add_transaction' %}" method="post" class="add-form" id="transactionForm">
+                {% csrf_token %}
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ticker">Ticker Symbol</label>
+                        <input type="text" name="ticker" id="ticker" required onblur="getStockInfo()">
+                        <small id="tickerInfo"></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transaction_date">Transaction Date</label>
+                        <input type="date" name="transaction_date" id="transaction_date" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="price">Price Per Share ($)</label>
+                        <input type="number" name="price" id="price" step="0.01" min="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shares">Number of Shares</label>
+                        <input type="number" name="shares" id="shares" step="0.01" min="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction_type">Transaction Type</label>
+                        <select name="transaction_type" id="transaction_type" required>
+                            <option value="BUY">Buy</option>
+                            <option value="SELL">Sell</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="industry_group">Industry Group</label>
+                        <select name="industry_group" id="industry_group" required>
+                            {% for code, display_name in industry_groups %}
+                                <option value="{{ code }}">{{ display_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group transaction-value">
+                        <label>Total Transaction Value:</label>
+                        <span id="transactionValue">$0.00</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add Transaction</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="tab-history" class="tab-content">
+            <h2>Transaction History</h2>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Ticker</th>
+                            <th>Type</th>
+                            <th>Shares</th>
+                            <th>Price</th>
+                            <th>Total Value</th>
+                            <th>Industry Group</th> {# New column #}
+                            <th>Added By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in transactions %}
+                        <tr>
+                            <td>{{ transaction.transaction_date }}</td>
+                            <td>{{ transaction.ticker }}</td>
+                            <td>{{ transaction.transaction_type_display }}</td>
+                            <td>{{ transaction.shares }}</td>
+                            <td>${{ transaction.price|floatformat:2 }}</td>
+                            <td>${{ transaction.total_price|floatformat:2 }}</td>
+                            <td>{{ transaction.industry_group_display }}</td> {# Display industry group #}
+                            <td>{{ transaction.created_by }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">No transactions recorded yet.</td> {# Updated colspan #}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-holdings" class="tab-content">
+            <h2>Current Holdings</h2>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Shares</th>
+                            <th>Cost Basis</th>
+                            <th>Total Cost</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for holding in holdings %}
+                        <tr>
+                            <td>{{ holding.ticker }}</td>
+                            <td>{{ holding.shares }}</td>
+                            <td>${{ holding.cost_basis|floatformat:2 }}</td>
+                            <td>${{ holding.total_holding_cost|floatformat:2 }}</td>
+                            <td>{{ holding.last_updated|date:"F j, Y" }}</td>
+                            <td>
+                                <form action="{% url 'delete_holding' holding.ticker %}" method="post" onsubmit="return confirm('Are you sure you want to delete this holding? This action cannot be undone.');">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">No holdings recorded yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function openTab(evt, tabId) {
+    var i, tabContent, tabBtn;
+
+    // Hide all tab content
+    tabContent = document.getElementsByClassName("tab-content");
+    for (i = 0; i < tabContent.length; i++) {
+        tabContent[i].classList.remove("active");
+    }
+
+    // Remove "active" class from all tab buttons
+    tabBtn = document.getElementsByClassName("tab-btn");
+    for (i = 0; i < tabBtn.length; i++) {
+        tabBtn[i].classList.remove("active");
+    }
+
+    // Show the current tab, and add "active" class to the button that opened the tab
+    document.getElementById(tabId).classList.add("active");
+    evt.currentTarget.classList.add("active");
+}
+
+// Calculate transaction value on input change
+document.addEventListener('DOMContentLoaded', function() {
+    const priceInput = document.getElementById('price');
+    const sharesInput = document.getElementById('shares');
+
+    function calculateValue() {
+        const price = parseFloat(priceInput.value) || 0;
+        const shares = parseFloat(sharesInput.value) || 0;
+        const value = price * shares;
+        document.getElementById('transactionValue').textContent = '$' + value.toFixed(2);
+    }
+
+    priceInput.addEventListener('input', calculateValue);
+    sharesInput.addEventListener('input', calculateValue);
+});
+
+// Get stock information when ticker is entered
+function getStockInfo() {
+    const ticker = document.getElementById('ticker').value.trim();
+    if (!ticker) return;
+
+    const infoElement = document.getElementById('tickerInfo');
+    infoElement.textContent = 'Loading...';
+
+    fetch(`/admin-dashboard/get-stock-info/${ticker}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                infoElement.textContent = `${data.name} - Current Price: $${data.price.toFixed(2)}`;
+                document.getElementById('price').value = data.price.toFixed(2);
+            } else {
+                infoElement.textContent = 'Could not find stock information. Please check the ticker symbol.';
+            }
+        })
+        .catch(error => {
+            infoElement.textContent = 'Error fetching stock data. Please try again.';
+        });
+}
+</script>
+{% endblock %}

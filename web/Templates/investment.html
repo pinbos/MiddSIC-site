@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Investment Approach - Middlebury Student Investment Committee{% endblock %}
+{% block meta_description %}Learn about the investment philosophy, research process, and portfolio management approach of the Middlebury Student Investment Committee.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero">
+    <div class="container">
+        <h1>Investment Approach</h1>
+        <p>Our research-driven investment philosophy and portfolio management strategy.</p>
+    </div>
+</section>
+
+<!-- Philosophy Section -->
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h2>Investment Philosophy</h2>
+                <p>The Middlebury SIC employs a value-oriented investment philosophy with a long-term perspective. We believe markets occasionally misprice securities, creating opportunities for disciplined investors to generate alpha.</p>
+                <p>Our core investment principles include:</p>
+                <ul>
+                    <li><strong>Long-term perspective</strong>: We focus on 3-5 year investment horizons rather than short-term market movements</li>
+                    <li><strong>Value orientation</strong>: We seek companies trading below our assessment of intrinsic value</li>
+                    <li><strong>Fundamental research</strong>: We conduct rigorous bottom-up analysis of business models, competitive advantages, and financial health</li>
+                    <li><strong>Risk management</strong>: We maintain appropriate diversification and consider downside scenarios</li>
+                    <li><strong>ESG integration</strong>: We incorporate environmental, social, and governance factors into our investment process</li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <div class="chart-container">
+                    <canvas id="portfolioChart" height="300"></canvas>
+                </div>
+                <p class="text-center">Current Portfolio Sector Allocation</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Research Process Section -->
+<section class="section features">
+    <div class="container">
+        <h2>Research Process</h2>
+        <div class="investment-process">
+            <div class="process-step">
+                <h3>Idea Generation</h3>
+                <p>Investment ideas come from multiple sources including sector screenings, market dislocations, industry trends, and company-specific catalysts. Each sector team conducts regular screenings to identify potential opportunities within their coverage universe.</p>
+            </div>
+            <div class="process-step">
+                <h3>Preliminary Analysis</h3>
+                <p>Ideas that pass initial screening undergo preliminary analysis to assess business quality, competitive positioning, financial health, and valuation. This helps us prioritize the most promising opportunities for deeper research.</p>
+            </div>
+            <div class="process-step">
+                <h3>Deep Dive Research</h3>
+                <p>For promising investment opportunities, we conduct comprehensive research including:</p>
+                <ul>
+                    <li>Business model analysis and competitive positioning</li>
+                    <li>Industry structure and growth prospects</li>
+                    <li>Financial statement analysis across multiple years</li>
+                    <li>Management quality assessment</li>
+                    <li>ESG factor evaluation</li>
+                    <li>Valuation using multiple methodologies (DCF, comparable companies, etc.)</li>
+                </ul>
+            </div>
+            <div class="process-step">
+                <h3>Financial Modeling</h3>
+                <p>We build detailed financial models to forecast future performance, incorporating conservative assumptions and multiple scenarios. Our models typically include 3-5 year projections with bull, base, and bear cases to understand the range of potential outcomes.</p>
+            </div>
+            <div class="process-step">
+                <h3>Investment Thesis Development</h3>
+                <p>Based on our research, we develop a comprehensive investment thesis articulating:</p>
+                <ul>
+                    <li>Why we believe the stock is mispriced</li>
+                    <li>Key catalysts that could drive price appreciation</li>
+                    <li>Risks and how they might be mitigated</li>
+                    <li>Target price and expected return</li>
+                    <li>Appropriate position size recommendation</li>
+                </ul>
+            </div>
+            <div class="process-step">
+                <h3>Committee Presentation</h3>
+                <p>Investment ideas are formally presented to the entire committee, followed by rigorous questioning and debate. The presentation includes the investment thesis, valuation analysis, and risk considerations. Investment proposals require majority approval from voting members.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Management Section -->
+<section class="section">
+    <div class="container">
+        <h2>Portfolio Management</h2>
+        <div class="row">
+            <div class="col-6">
+                <h3>Portfolio Construction</h3>
+                <p>We construct a diversified portfolio across sectors while allowing for conviction-based position sizing. Our portfolio management guidelines include:</p>
+                <ul>
+                    <li>Individual position limits (typically 2-5% of portfolio)</li>
+                    <li>Sector allocation limits to ensure diversification</li>
+                    <li>Cash allocation guidelines (typically 5-15% of portfolio)</li>
+                    <li>Rebalancing procedures to maintain target allocations</li>
+                </ul>
+                <p>While we benchmark against the S&P 500, we construct our portfolio based on conviction rather than trying to replicate index weights.</p>
+            </div>
+            <div class="col-6">
+                <h3>Risk Management</h3>
+                <p>Effective risk management is central to our investment process. Our approach includes:</p>
+                <ul>
+                    <li>Position sizing based on conviction and risk assessment</li>
+                    <li>Ongoing monitoring of portfolio companies</li>
+                    <li>Regular review of investment theses</li>
+                    <li>Predefined stop-loss guidelines for positions</li>
+                    <li>Scenario analysis to understand potential outcomes</li>
+                    <li>Diversification across sectors and styles</li>
+                </ul>
+                <p>We believe in "knowing what we own" and maintain detailed research on all portfolio holdings to understand company-specific risks.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Performance Evaluation Section -->
+<section class="section features">
+    <div class="container">
+        <h2>Performance Evaluation</h2>
+        <div class="row">
+            <div class="col-6">
+                <h3>Performance Metrics</h3>
+                <p>We evaluate our performance using multiple metrics:</p>
+                <ul>
+                    <li>Total return relative to benchmark (S&P 500)</li>
+                    <li>Risk-adjusted return (Sharpe ratio)</li>
+                    <li>Attribution analysis (sector allocation vs. security selection)</li>
+                    <li>Tracking error and information ratio</li>
+                </ul>
+                <p>Performance is reviewed quarterly with a focus on long-term results rather than short-term fluctuations.</p>
+            </div>
+            <div class="col-6">
+                <h3>Learning Process</h3>
+                <p>We view every investment as a learning opportunity, regardless of outcome. Our continuous improvement process includes:</p>
+                <ul>
+                    <li>Post-mortem analysis of both successful and unsuccessful investments</li>
+                    <li>Documentation of lessons learned</li>
+                    <li>Regular skill development workshops</li>
+                    <li>Knowledge transfer between graduating seniors and new members</li>
+                </ul>
+                <p>This systematic approach to learning has helped us refine our investment process over time.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ESG Section -->
+<section class="section">
+    <div class="container">
+        <h2>ESG Integration</h2>
+        <p>Environmental, Social, and Governance (ESG) factors are integrated throughout our investment process. We believe that companies with strong ESG practices are likely to outperform over the long term and present lower risk profiles.</p>
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Environmental</h3>
+                        <p>We assess environmental impact, resource usage, climate policies, and sustainability initiatives. Companies with forward-thinking environmental practices often benefit from operational efficiencies and reduced regulatory risk.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Social</h3>
+                        <p>We evaluate labor practices, product safety, customer relations, and community engagement. Companies with strong social practices typically experience lower turnover, better customer loyalty, and stronger brand reputation.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Governance</h3>
+                        <p>We analyze board structure, executive compensation, shareholder rights, and business ethics. Good governance is often associated with better oversight, strategic decision-making, and alignment with shareholder interests.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script>
+    // These variables receive the data calculated in the Django view.
+    const sectorLabels = {{ chart_labels|safe }};
+    const sectorData = {{ chart_data|safe }};
+
+    function initializePortfolioChart() {
+        const ctx = document.getElementById('portfolioChart').getContext('2d');
+        
+        // Check if there is data to display
+        if (sectorLabels.length === 0) {
+            ctx.font = "16px Arial";
+            ctx.textAlign = "center";
+            ctx.fillText("Portfolio data is not available to display the chart.", ctx.canvas.width / 2, ctx.canvas.height / 2);
+            return;
+        }
+
+        const portfolioChart = new Chart(ctx, {
+            type: 'doughnut', // or 'pie'
+            data: {
+                labels: sectorLabels, // Use data from the view
+                datasets: [{
+                    label: 'Portfolio Allocation %',
+                    data: sectorData, // Use data from the view
+                    backgroundColor: [
+                        '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+                        '#858796', '#5a5c69', '#f8f9fc', '#dddfeb', '#6f42c1'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed !== null) {
+                                    label += context.parsed + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePortfolioChart();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Middlebury Student Investment Committee{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Middlebury College's student-run investment fund, managing real assets and providing hands-on investment experience.{% endblock %}">
+    
+    <link rel="shortcut icon" href="{% static 'logo.png' %}" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="navbar-brand">
+                    <img src="{% static 'images/middleburysic_logo.jpg' %}" alt="Middlebury SIC Logo">
+                    <h1>Middlebury Student Investment Committee</h1>
+                </div>
+                
+                <button class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="navbar-nav" id="navMenu">
+                    {# OPTIONAL: Add a close button for the mobile menu. Uncomment if needed. #}
+                    {# <li class="nav-item mobile-close-button"> #}
+                    {#    <a href="#" class="nav-link" id="closeMenuButton"> #}
+                    {#        <i class="fas fa-times"></i> Close #}
+                    {#    </a> #}
+                    {# </li> #}
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'about' %}" class="nav-link {% if 'about' in request.path %}active{% endif %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'leadership' %}" class="nav-link {% if 'leadership' in request.path %}active{% endif %}">Leadership</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'investment' %}" class="nav-link {% if 'investment' in request.path %}active{% endif %}">Investment Approach</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'performance' %}" class="nav-link {% if request.path == '/performance/' %}active{% endif %}">Our Portfolio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'recruitment' %}" class="nav-link {% if 'recruitment' in request.path %}active{% endif %}">Recruitment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'contact' %}" class="nav-link {% if 'contact' in request.path %}active{% endif %}">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="footer-logo">
+                        <img src="{% static 'images/middleburysic_logo.png' %}" alt="Middlebury SIC Logo">
+                    </div>
+                    <p>The Middlebury Student Investment Committee manages a portion of the college's endowment, providing students with real-world investment experience.</p>
+                </div>
+                <div class="col">
+                    <h3 color = "white">Quick Links</h3>
+                    <ul class="footer-nav">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'leadership' %}">Leadership</a></li>
+                        <li><a href="{% url 'investment' %}">Investment Approach</a></li>
+                        <li><a href="{% url 'performance' %}">Our Portfolio</a></li>
+                        <li><a href="https://www.middlebury.edu/" target="_blank">Middlebury College</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h3 color= "white">Contact Us</h3>
+                    <div class="footer-contact">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Middlebury College<br>Middlebury, VT 05753</span>
+                    </div>
+                    <div class="footer-contact">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:sic@middlebury.edu">sic@middlebury.edu</a>
+                    </div>
+                    <div class="footer-contact">
+                        <i class="fab fa-linkedin"></i>
+                        <a href="https://linkedin.com/" target="_blank">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} Middlebury Student Investment Committee. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

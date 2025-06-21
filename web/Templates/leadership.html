@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Leadership - Middlebury SIC{% endblock %}
+{% block meta_description %}Meet the leadership team of the Middlebury Student Investment Committee - the Executive Committee, Portfolio Managers, and Senior Analysts who manage the investment fund.{% endblock %}
+
+{% block content %}
+<section class="leadership-header">
+    <div class="container">
+        <h1>Our Leadership Team</h1>
+        <p>The Middlebury Student Investment Committee is managed by a dedicated team of student investors who work together to make strategic investment decisions.</p>
+    </div>
+</section>
+
+<section class="executive-committee">
+    <div class="container">
+        <h2>Executive Committee</h2>
+        <p>Our executive committee oversees all operations and investment decisions of the fund.</p>
+        
+        <div class="leadership-grid">
+            {% for executive in executives %}
+            <div class="leadership-card">
+                {% if executive.profile_picture %}
+                <div class="profile-image">
+                    <img src="{{ executive.profile_picture.url }}" alt="{{ executive.name }}">
+                </div>
+                {% else %}
+                <div class="profile-image placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% endif %}
+                <div class="leadership-details">
+                    <h3>{{ executive.name }}</h3>
+                    <p class="role">{{ executive.get_exec_role_display }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-data">Executive committee information coming soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="portfolio-managers">
+    <div class="container">
+        <h2>Portfolio Managers</h2>
+        <p>Our portfolio managers lead research and investment decisions across different industry groups.</p>
+        
+        <div class="leadership-grid">
+            {% for manager in portfolio_managers %}
+            <div class="leadership-card">
+                {% if manager.profile_picture %}
+                <div class="profile-image">
+                    <img src="{{ manager.profile_picture.url }}" alt="{{ manager.name }}">
+                </div>
+                {% else %}
+                <div class="profile-image placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% endif %}
+                <div class="leadership-details">
+                    <h3>{{ manager.name }}</h3>
+                    <p class="role">Portfolio Manager</p>
+                    <p class="industry">{{ manager.get_industry_group_display }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="no-data">Portfolio manager information coming soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="senior-analysts">
+    <div class="container">
+        <h2>Senior Analysts</h2>
+        <p>Our senior analysts work with portfolio managers to research companies and sectors for potential investment opportunities.</p>
+        
+        {% regroup senior_analysts by get_industry_group_display as industry_groups %}
+        
+        <div class="analysts-container">
+            {% for industry in industry_groups %}
+            <div class="industry-group">
+                <h3>{{ industry.grouper }}</h3>
+                <ul class="analysts-list">
+                    {% for analyst in industry.list %}
+                    <li>{{ analyst.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% empty %}
+            <p class="no-data">Senior analyst information coming soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

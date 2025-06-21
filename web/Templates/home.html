@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Middlebury Student Investment Committee - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Middlebury Student Investment Committee</h1>
+        <p>We are a student-run investment fund managing a portion of Middlebury College's endowment through rigorous research and collaborative decision-making.</p>
+        <div>
+            <a href="{% url 'investment' %}" class="btn btn-primary">Our Approach</a>
+            <a href="{% url 'recruitment' %}" class="btn btn-outline">Join Our Team</a>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+
+<style>
+    .about-section {
+        background: url("{% static 'images/loaf.jpg' %}") no-repeat center center;
+        background-size: cover;
+        padding: 100px 0;
+        color: white;
+        position: relative;
+    }
+</style>
+
+<section class="section about-section">
+    <div class="container">
+        <div class="section-title">
+            <h2>Who We Are</h2>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p>The Middlebury Student Investment Committee (SIC) is a student-run organization that actively manages a portion of Middlebury College's endowment. Founded in 2011, our committee consists of dedicated students passionate about finance, economics, and investment management.</p>
+                <p>Our mission is to preserve and grow capital while providing members with valuable hands-on experience in investment research and portfolio management. We employ a disciplined, research-driven approach focusing on long-term value creation.</p>
+                <a href="{% url 'about' %}" class="btn btn-primary">Learn More About Us</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        initializePerformanceChart();
+    });
+</script>
+{% endblock %}

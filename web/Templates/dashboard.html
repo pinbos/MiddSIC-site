@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Dashboard - Middlebury SIC{% endblock %}
+
+{% block content %}
+<section class="admin-dashboard">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, {{ request.user.first_name }}. Manage your investment committee below.</p>
+        
+        <div class="admin-cards">
+            <div class="admin-card">
+                <i class="fas fa-users"></i>
+                <h3>Manage Team</h3>
+                <p>Update executive committee, portfolio managers, and senior analysts.</p>
+                <a href="{% url 'manage_team' %}" class="btn btn-primary">Manage Team</a>
+            </div>
+            
+            <div class="admin-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Manage Portfolio</h3>
+                <p>Track transactions and update the fund's holdings.</p>
+                <a href="{% url 'manage_portfolio' %}" class="btn btn-primary">Manage Portfolio</a>
+            </div>
+        </div>
+        
+        <div class="admin-logout">
+            <a href="{% url 'account_logout' %}" class="btn btn-outline">Logout</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

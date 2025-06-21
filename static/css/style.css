@@ -1,0 +1,768 @@
+/* Middlebury Student Investment Committee - Main Stylesheet */
+:root {
+    /* Color palette - using Middlebury blue and complementary colors */
+    --primary: #0d395f;       /* Middlebury blue */
+    --primary-light: #1a5080;
+    --secondary: #8ba3bc;     /* Lighter blue accent */
+    --accent: #c4b35a;        /* Gold accent */
+    --light: #f4f6f9;
+    --dark: #1c2836;
+    --text: #333333;
+    --text-light: #666666;
+    --white: #ffffff;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --gray-400: #ced4da;
+    --gray-500: #adb5bd;
+    
+    /* Typography */
+    --font-primary: 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-heading: 'Montserrat', 'Helvetica Neue', sans-serif;
+    --font-mono: 'Roboto Mono', monospace;
+  }
+  
+  /* Global styles */
+  html, body {
+    font-family: var(--font-primary);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    background-color: var(--light);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+  }
+
+  /* Body class for side menu open state */
+  body.side-menu-open {
+      overflow: hidden; /* Prevent scrolling when side menu is open */
+  }
+
+  main {
+    flex: 1;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--primary-light);
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  
+  p {
+    margin-bottom: 1.2rem;
+  }
+  
+  a {
+    color: var(--primary-light);
+    text-decoration: none; /* Remove default underline from all links */
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: var(--primary-light);
+    /* The 'text-decoration: none;' line was removed from here. */
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-primary {
+    color: var(--primary);
+  }
+  
+  .text-accent {
+    color: var(--accent);
+  }
+  
+  .fw-bold {
+    font-weight: 700;
+  }
+  
+  /* Header & Navigation */
+  header {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px; /* Adjust padding for consistency */
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevents the brand from shrinking */
+    min-width: 0; /* Allows content to shrink if needed */
+  }
+  
+  .navbar-brand img {
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .navbar-brand h1 {
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    border: none;
+    color: var(--primary);
+    white-space: nowrap; /* Keep brand text on one line */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  }
+
+  /* Side Navigation Specific Styles */
+  .navbar-nav {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    list-style: none;
+    padding: 2rem 0; /* Vertical padding inside the side menu */
+    margin: 0;
+    gap: 1rem; /* Spacing between nav items vertically */
+    
+    position: fixed; /* Fixed position for slide-out effect */
+    top: 0;
+    right: 0; /* Start off-screen to the right */
+    width: 250px; /* Width of the side menu */
+    height: 100%; /* Full height of the viewport */
+    background-color: var(--primary); /* Background color of the side menu */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    z-index: 1050; /* Higher than header to overlap */
+    transform: translateX(100%); /* Initially push off-screen to the right */
+    transition: transform 0.3s ease-in-out; /* Smooth transition */
+    
+    align-items: center; /* Center nav items horizontally */
+    justify-content: flex-start; /* Align items to the top */
+  }
+
+  /* Class to show the side navigation */
+  .navbar-nav.show {
+    transform: translateX(0); /* Slide into view */
+  }
+  
+  .nav-item {
+    width: 100%; /* Full width within the side menu */
+    text-align: center; /* Center the text */
+  }
+  
+  .nav-link {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 1rem; /* Increase padding for clickable area */
+    position: relative;
+    text-decoration: none; /* Ensure no underline for nav links by default */
+    color: var(--white); /* White text for contrast against primary background */
+    display: block; /* Make the whole link clickable */
+  }
+  
+  .nav-link:hover {
+    color: var(--accent); /* Change text color on hover */
+    /* The 'text-decoration: none;' line was removed from here. */
+  }
+
+  /* Underline effect for nav links */
+  .nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Center the underline */
+    transform: translateX(-50%); /* Center the underline */
+    width: 0;
+    height: 2px;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover:after,
+  .nav-link.active:after {
+    width: 80%; /* Width of underline on hover/active */
+  }
+  
+  .nav-link.active {
+    color: var(--accent); /* Active link color */
+  }
+  
+  .mobile-toggle {
+    display: block; /* Always show the toggle button */
+    background: none;
+    border: none;
+    font-size: 1.8rem; /* Larger icon */
+    color: var(--primary); /* Color of the hamburger icon */
+    cursor: pointer;
+    z-index: 1100; /* Ensure toggle is above side menu */
+    padding: 0.5rem; /* Add some padding for easier clicking */
+  }
+
+  /* Overlay for when side menu is open */
+  .side-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%; /* Default to full width */
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* This is the dimming color */
+      z-index: 1040;
+      display: none; /* Hidden by default */
+      opacity: 0;
+      pointer-events: none; /* Default: Makes the overlay unclickable to allow content interaction */
+      transition: opacity 0.3s ease-in-out, left 0.3s ease-in-out, width 0.3s ease-in-out; /* Add transitions for smoother effect */
+  }
+
+  body.side-menu-open .side-menu-overlay {
+      display: block; /* Show the overlay */
+      opacity: 1;
+      /* Position the overlay to the left of the menu */
+      left: 0; /* Start at the far left of the viewport */
+      width: calc(100% - 250px); /* Occupy 100% of the width minus the menu's width (250px) */
+      pointer-events: auto; /* IMPORTANT: Re-enable clicks on the *dimmed area* to close the menu */
+  }
+
+  /* Hide the navbar-right-group as its content is now in the side menu */
+  .navbar-right-group {
+      display: flex; /* Keep flex for toggle button alignment */
+      align-items: center;
+      justify-content: flex-end; /* Push toggle to the right */
+      gap: 0; /* No gap */
+  }
+  
+  /* Hero section */
+  .hero {
+    background: linear-gradient(rgba(13, 57, 95, 0.8), rgba(13, 57, 95, 0.9)), url('/static/images/campus.jpg');
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    padding: 5rem 0;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    border-bottom: none;
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    opacity: 0.9;
+  }
+  
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .btn-primary {
+    background-color: var(--accent);
+    color: var(--dark);
+    border: 2px solid var(--accent);
+  }
+  
+  .btn-primary:hover {
+    background-color: transparent;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  
+  .btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+  }
+  
+  .btn-outline:hover {
+    background-color: var(--white);
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  /* Sections */
+  .section {
+    padding: 4rem 0;
+  }
+  
+  .section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .section-title h2 {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .section-title h2:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 50px;
+    height: 3px;
+    background-color: var(--accent);
+    transform: translateX(-50%);
+  }
+  
+  /* Cards */
+  .card {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-top: 0;
+  }
+  
+  .card-text {
+    color: var(--text-light);
+  }
+  
+  .card-footer {
+    padding: 1rem 1.5rem;
+    background-color: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+  }
+  
+  /* Grid system */
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+  }
+  
+  .col {
+    flex: 1;
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+  
+  .col-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+  
+  .col-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 15px;
+    margin-bottom: 30px;
+  }
+  
+  /* Features */
+  .features {
+    background-color: var(--white);
+  }
+  
+  .feature-icon {
+    background-color: var(--primary);
+    color: var(--white);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin: 0 auto 1.5rem;
+  }
+  
+  /* Stats section */
+  .stats {
+    background-color: var(--primary);
+    color: var(--white);
+    text-align: center;
+  }
+  
+  .stat-item h3 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+  }
+  
+  .stat-item p {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  
+  /* Team section - Leadership Image Uniformity */
+  .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+      gap: 30px; /* Spacing between cards */
+      padding-top: 20px;
+  }
+
+  .leadership-card {
+      text-align: center;
+      background-color: var(--white);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .leadership-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile-image {
+      width: 150px; /* Desired uniform width */
+      height: 150px; /* Desired uniform height */
+      overflow: hidden; /* Hides parts of the image that go outside the box */
+      border-radius: 50%; /* Makes it circular */
+      margin: 0 auto 1rem; /* Center and add bottom margin */
+      display: flex; /* For centering the placeholder icon */
+      align-items: center; /* For centering the placeholder icon */
+      justify-content: center; /* For centering the placeholder icon */
+      background-color: var(--gray-200); /* Background for placeholder */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: subtle shadow */
+  }
+
+  .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image covers the container, cropping if necessary */ /* */
+      display: block; /* Removes extra space below image */
+  }
+
+  /* Styles for the placeholder icon */
+  .profile-image.placeholder {
+      border: 2px dashed var(--gray-400); /* Visual cue for placeholder */
+  }
+
+  .profile-image.placeholder i {
+      font-size: 4rem; /* Size of the placeholder icon */
+      color: var(--gray-500); /* Color of the placeholder icon */
+  }
+
+  .leadership-details h3 {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      font-size: 1.3rem;
+      color: var(--primary);
+  }
+
+  .leadership-details .role {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 5px;
+  }
+
+  .leadership-details .industry {
+      font-style: italic;
+      color: var(--text-light);
+      font-size: 0.95rem;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .timeline::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    background-color: var(--gray-300);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1.5px;
+  }
+  
+  .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+  }
+  
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    top: 15px;
+    right: -10px;
+    z-index: 1;
+  }
+  
+  .timeline-item.left {
+    left: 0;
+  }
+  
+  .timeline-item.right {
+    left: 50%;
+  }
+  
+  .timeline-item.right::after {
+    left: -10px;
+  }
+  
+  .timeline-content {
+    padding: 20px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  .timeline-date {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  
+  /* Portfolio chart styles */
+  .chart-container {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+  }
+  
+  /* CTA section */
+  .cta {
+    background: linear-gradient(rgba(13, 57, 95, 0.9), rgba(13, 57, 95, 0.9)), url('/static/images/campus-2.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 5rem 0;
+    text-align: center;
+    color: var(--white);
+  }
+  
+  .cta h2 {
+    color: var(--white);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cta p {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  /* Footer */
+  footer {
+    background-color: var(--dark);
+    color: var(--gray-300);
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer-logo img {
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-nav {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-nav li {
+    margin-bottom: 0.75rem;
+  }
+  
+  .footer-nav a {
+    color: var(--primary-light);
+    transition: color 0.3s ease;
+  }
+  
+  .footer-nav a:hover {
+    color: var(--white);
+    text-decoration: none;
+  }
+  
+  .footer-contact {
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+  }
+  
+  .footer-contact i {
+    margin-right: 10px;
+    color: var(--accent);
+  }
+  
+  footer .col {
+      text-align: left; 
+  }
+
+  .footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+  }
+  
+  /* Investment approach specific styles */
+  .investment-process {
+    counter-reset: step;
+  }
+  
+  .process-step {
+    position: relative;
+    padding-left: 70px;
+    margin-bottom: 2rem;
+  }
+  
+  .process-step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  /* Responsive adjustments (mostly for smaller screen text sizes if needed) */
+  @media (max-width: 992px) {
+    .col-4 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+    
+    .timeline-item {
+      width: 100%;
+      padding-right: 25px;
+      padding-left: 70px;
+    }
+    
+    .timeline::after {
+      left: 31px;
+    }
+    
+    .timeline-item::after {
+      left: 21px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar-brand h1 {
+        font-size: 1rem;
+    }
+    .mobile-toggle {
+        font-size: 1.6rem;
+    }
+
+    /* Adjust footer columns for smaller screens */
+    footer .col {
+        flex: 0 0 100%; /* Make each column full width */
+        max-width: 100%;
+        text-align: center; /* Center text for single column layout */
+        margin-bottom: 20px;
+    }
+
+    .footer-contact {
+        justify-content: center; /* Center icons and text in footer contacts */
+    }
+  }
+
+  @media (max-width: 576px) {
+    .navbar-brand img {
+      height: 40px;
+    }
+    .navbar-brand h1 {
+        font-size: 0.9rem;
+    }
+    .mobile-toggle {
+        font-size: 1.4rem;
+    }
+    .hero {
+      padding: 3rem 0;
+    }
+    .section {
+      padding: 3rem 0;
+    }
+  }
