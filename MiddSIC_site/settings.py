@@ -162,3 +162,4 @@ trusted_origins_str = config('CSRF_TRUSTED_ORIGINS', default='')
 
 # Split the string by commas to create a list for Django
 CSRF_TRUSTED_ORIGINS = [s.strip() for s in trusted_origins_str.split(',') if s.strip()]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
