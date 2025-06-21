@@ -157,3 +157,8 @@ LOGIN_REDIRECT_URL = '/'
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Get the comma-separated string for trusted origins from environment variable
+trusted_origins_str = config('CSRF_TRUSTED_ORIGINS', default='')
+
+# Split the string by commas to create a list for Django
+CSRF_TRUSTED_ORIGINS = [s.strip() for s in trusted_origins_str.split(',') if s.strip()]
