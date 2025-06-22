@@ -31,8 +31,8 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    return render(request, 'home.html')
-
+    # For this test, we will render a completely simple HTML file.
+    return render(request, 'test.html')
 
 def about(request):
     return render(request, 'about.html')
