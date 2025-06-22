@@ -31,7 +31,7 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    return HttpResponse("<h1>Middleware Test Successful</h1>")
+    return HttpResponse("home.html")
 
 
 def about(request):
