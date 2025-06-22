@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect
 from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
@@ -31,21 +31,8 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    try:
-        # This is the line that is likely causing the hidden error
-        return render(request, 'home.html')
-    except Exception as e:
-        # This block will catch ANY error and print it to the logs
-        print("!!!!!!!!!! CAUGHT EXCEPTION IN HOME VIEW !!!!!!!!!!")
-        print(f"Exception Type: {type(e).__name__}")
-        print(f"Exception Message: {e}")
-        print("Full Traceback:")
-        traceback.print_exc()
-        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    return HttpResponse("<h1>Success!</h1><p>The Django application is running correctly.</p>")
 
-        # Re-raise the exception so the server still returns a 500 error
-        # after we have logged the details.
-        raise
 
 def about(request):
     return render(request, 'about.html')
