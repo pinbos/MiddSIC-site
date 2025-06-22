@@ -31,8 +31,8 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    # For this test, we will render a completely simple HTML file.
-    return render(request, 'test.html')
+    return HttpResponse("<h1>Middleware Test Successful</h1>")
+
 
 def about(request):
     return render(request, 'about.html')
