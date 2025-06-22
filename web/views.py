@@ -31,7 +31,7 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    return HttpResponse("home.html")
+    return render(request, "home.html")
 
 
 def about(request):
