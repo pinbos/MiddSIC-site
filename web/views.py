@@ -31,7 +31,21 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    return render(request, 'home.html')
+    try:
+        # This is the line that is likely causing the hidden error
+        return render(request, 'home.html')
+    except Exception as e:
+        # This block will catch ANY error and print it to the logs
+        print("!!!!!!!!!! CAUGHT EXCEPTION IN HOME VIEW !!!!!!!!!!")
+        print(f"Exception Type: {type(e).__name__}")
+        print(f"Exception Message: {e}")
+        print("Full Traceback:")
+        traceback.print_exc()
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+        # Re-raise the exception so the server still returns a 500 error
+        # after we have logged the details.
+        raise
 
 def about(request):
     return render(request, 'about.html')
