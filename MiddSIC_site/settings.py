@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'web',                            # Your app
 ]
-ALLOWED_HOSTS = ['example.com', 'localhost', '127.0.0.1']
 
 
 MIDDLEWARE = [
