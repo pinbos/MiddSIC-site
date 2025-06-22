@@ -31,7 +31,7 @@ def index(request):
     return render(request, "base.html")
 
 def home(request):
-    return HttpResponse("<h1>Success!</h1><p>The Django application is running correctly.</p>")
+    return render(request, 'home.html')
 
 
 def about(request):
